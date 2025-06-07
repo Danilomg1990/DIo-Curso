@@ -7,7 +7,7 @@ import Menu as men
 def main():
     limite_saque=0
     agencia="0001"
-
+    numero_conta = 1  # Conta incremental
     saldo = 0
     limite=500
     numero_saque=0
@@ -45,6 +45,16 @@ def main():
         elif opcao == 0:
             print("Saindo do sistema...")
             break
+        elif opcao == 4:  # Nova Conta
+            contas = oper.criar_conta(agencia, numero_conta, usuario, contas)
+            numero_conta += 1
+            continue
+        elif opcao == 5:  # Listar Contas
+            oper.listar_contas(contas)
+            continue
+        elif opcao == 6:  # Novo Usuário
+            usuario = oper.criar_usuario(usuario)
+            continue
         else:
             print("Opção inválida.")
             input("Pressione Enter para continuar...")

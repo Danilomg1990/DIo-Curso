@@ -48,4 +48,52 @@ def extrato_tela(saldo,/,*,extrato):
     print(f"\nSaldo atual:\t\tR$ {saldo:.2f}")
     print("##################################")
     input("Pressione Enter para continuar...")
-    return
+    return saldo,extrato
+
+def criar_usuario(usuarios):
+    cpf = input("Informe o CPF (somente números): ")
+    if any(usuario["cpf"] == cpf for usuario in usuarios):
+        print("Usuário já existente!")
+        input("Pressione Enter para continuar...")
+        return usuarios
+
+    nome = input("Informe o nome completo: ")
+    data_nascimento = input("Informe a data de nascimento (dd/mm/aaaa): ")
+    endereco = input("Informe o endereço (logradouro, número - bairro - cidade/UF): ")
+
+    usuarios.append({
+        "nome": nome,
+        "data_nascimento": data_nascimento,
+        "cpf": cpf,
+        "endereco": endereco,
+    })
+
+    print("Usuário criado com sucesso!")
+    input("Pressione Enter para continuar...")
+    return usuarios
+
+def criar_conta(agencia, numero_conta, usuarios, contas):
+    cpf = input("Informe o CPF do usuário: ")
+    usuario = next((user for user in usuarios if user["cpf"] == cpf), None)
+
+    if usuario:
+        conta = {"agencia": agencia, "numero_conta": numero_conta, "usuario": usuario}
+        contas.append(conta)
+        print("Conta criada com sucesso!")
+    else:
+        print("Usuário não encontrado. Crie o usuário primeiro.")
+
+    input("Pressione Enter para continuar...")
+    return contas
+
+def listar_contas(contas):
+    print("########## LISTAR CONTAS ##########\n")
+    if not contas:
+        print("Nenhuma conta cadastrada.")
+    else:
+        for conta in contas:
+            print("=" * 40)
+            print(f"Agência:\t{conta['agencia']}")
+            print(f"Número:\t\t{conta['numero_conta']}")
+            print(f"Titular:\t{conta['usuario']['nome']}")
+    input("\nPressione Enter para continuar...")
